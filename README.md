@@ -3,53 +3,42 @@
 <div align="center">
   
 # Telegram-Bot
-> 🤖一个基于<a href="https://github.com/Mrs4s/go-cqhttp/releases">go-cqhttp</a>和Python的开箱即用的机器人
+> 🤖一个使用了<a href="https://github.com/instaloader/instaloader">instaloader</a>和Python的开箱即用的tg机器人
 
   <p align="center">
-  <a href="https://github.com/BlingCc233/go-cqhttp-ccbot/releases">
-    <img src="https://img.shields.io/github/v/release/BlingCc233/go-cqhttp-ccbot?color=blueviolet&include_prereleases&style=for-the-badge" alt="release">
+  <a href="https://github.com/BlingCc233/tgbot/releases">
+    <img src="https://img.shields.io/github/v/release/BlingCc233/tgbot?color=blueviolet&include_prereleases&style=for-the-badge" alt="release">
   </a>
 </p>
 
 ## 声明
 一切开发旨在学习，请勿用于非法用途
   <br/>
-_ccbot的动漫形象来源于[OhotoAi](https://wonder-egg-priority.com/character/ai/)_
+_tgbot的动漫形象尚未建立_
 </div>
 
 ## 启动
-- 使用时仅需修改`/go-cqhttp/config.yml`中的账号密码，以及`/bot/main.py`与`/bot/api.py`中的高级管理员账号(请自行参考注释)
-- 也可按需修改`/bot/api.py`中的管理群，欢迎语，<a href="#涩图">涩图API</a>等。（不改也能直接使用）
+- 使用时仅需添加`TELEGRAM_API_TOKEN`中的机器人token，以及`/mihoyo.py`中的抓包信息(请自行参考注释)
 - 不需要的功能请直接用`'''`多行注释掉
-- 违禁词可以添加至`/bot/mingan_words.txt`中
-- 需要用到的库(pip(3) install)：flask 和 requests
-- 先运行/go-cqhttp目录下的./go-cqhttp
-- 再运行/bot目录下的main.py
+- 需要的功能请自行参照源码补充
 ## 功能
-- 参考`/bot/api.py`的注释
+- 参考`/api.py`的注释
 
 | 功能        | 说明                       |
 | ---------- | ------------------------- |
-| 复读机      | 发送 复读 + XXX             |
-| 防撤回      | 管理员私聊/anti_recall 1/0 开/关  |
-| 关键词回复   | 无特殊                     |
-| 涩图bot     | 发送/setu                  |
-| 反馈        | 发送/feedback + XXX 提交bug |
-| 自动回复     | 管理员私聊/status 1/0 开/关  |
-| 指定发送     | /send +接受者账号 +内容     |
-| 闪照恢复     |                           |
+| hello      | 发送 /hello                 |
+| 命令列表     | /help                     |
+| 翻墙链接   | /whats_the_subscribe       |
+| 米哈游签到     | 发送/mihoyo                  |
+| ins解析下载        | 图片视频均可以/insdown url |
+| 各种资源     | 参考/help      |
 
 ## 施工中的功能
-- [ ] [狼人杀🐺](https://github.com/HUZHU-TEAM/Wolf-game "狼人杀")
-- [ ] 打断+1复读
 - [ ] QRcode二维码生成
-- [ ] 识别群图片二维码，并撤回
-- [X] 进群欢迎 ~~验证~~
-- [ ] 群禁言
-- [X] 防闪照
-- [X] 消息转发
-- [X] ~~超级管理员~~指定对象发送信息
+- [ ] 群聊 （目前只能私聊）
+- [ ] 消息转发
 - [ ] 今日人品
+- [ ] 涩图
 
 ## 涩图
 - 使用`/setu ?`自定义涩图类型，for instance:`/setu ?r18=1`
