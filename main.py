@@ -43,6 +43,9 @@ def get_updates(offset=None):
                 # 如果是消息更新
                 if "message" in update:
                     message = update["message"]
+                    if message["chat"]["type"] == "group":
+                        offset = update["update_id"] + 1
+                        get_updates(offset)
                     # 处理消息
                     api.cmds(message["text"], message["chat"]["id"], update)
                 # 如果是回调查询更新
