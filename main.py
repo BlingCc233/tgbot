@@ -4,31 +4,15 @@ from flask import Flask, request
 import api
 import requests
 import time
+from Config import *
 
 app = Flask(__name__)
 
-TELEGRAM_API_TOKEN = 'your token'
+
 bottoken = TELEGRAM_API_TOKEN
 rurl = r"https://api.telegram.org/bot" + bottoken + "/getUpdates"
 surl = r"https://api.telegram.org/bot" + bottoken + "/sendMessage"
 curl = r"https://api.telegram.org/bot" + bottoken + "/ansewrCallbackQuery"
-
-# def receive_message():
-#
-#     offset = None
-#     while True:
-#         try:
-#             response = requests.get(rurl, params={'offset': offset})
-#             print(response.text)
-#             data = response.json()
-#             for update in data['result']:
-#                 message = update["message"]
-#                 api.cmds(message["text"], message["chat"]["id"], update)
-#                 offset = update['update_id'] + 1
-#         except (requests.exceptions.RequestException, ValueError, KeyError) as e:
-#             print(f'Error occurred while fetching updates: {str(e)}')
-#         time.sleep(1)
-#     return 'OK'
 
 
 res = None
@@ -79,5 +63,5 @@ def indexx():
 
 
 if __name__ == '__main__':
-    get_updates()
+    get_updates(None)
     app.run(debug=True)

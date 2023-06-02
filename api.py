@@ -10,7 +10,12 @@ import requests
 from flask import request
 from instaloader import Post
 
-TELEGRAM_API_TOKEN = 'your token'
+import plugins.Instagram
+import plugins.Spotify
+import plugins.Setu
+from Config import *
+from plugins.mihoyo import main_handler
+
 bottoken = TELEGRAM_API_TOKEN
 surl = r"https://api.telegram.org/bot" + bottoken + "/sendMessage"
 purl = r"https://api.telegram.org/bot" + bottoken + "/sendPhoto"
@@ -25,10 +30,11 @@ def cmds(message, chat_id, update):
         index(chat_id)
     if message[0:6] == "/whats":
         print(message)
-        send_message(chat_id, "🔐Clash订阅:\n")
+        send_message(chat_id, "🔐Clash订阅:\nhttps://pqjc.site/api/v1/client/subscribe?token=")
     if message == "/mihoyo":
         print(message)
-        send_message(chat_id, os.popen("python3 /home/tgbot/mihoyo.py"))
+        # send_message(chat_id, os.popen("python3 /home/tgbot/mihoyo.py"))
+        main_handler(None, None)
     if message == "/help":
         print(message)
         commands(chat_id)
@@ -40,7 +46,10 @@ def cmds(message, chat_id, update):
         webs(chat_id, message)
     if message[0:8] == "/insdown":
         print(message)
-        insd(chat_id, message)
+        plugins.Instagram.insd(chat_id, message)
+    if message[0:5] == "/setu":
+        print(message)
+        plugins.Setu.setu(chat_id, message)
 
 
 
@@ -53,6 +62,17 @@ def send_message(chat_id, message):
     decodedata["chat_id"]=chat_id
     response=requests.post(url=surl,data=decodedata)
     print(response.text)
+
+def send_sticker(chat_id, sticker):
+    # 构造请求的URL
+    url = r"https://api.telegram.org/bot" + bottoken + r"/sendSticker"
+    # 构造请求的参数
+    params = {
+        "chat_id": chat_id,
+        "sticker": sticker
+    }
+    response = requests.post(url, data=params)
+    pass
 
 def get_holidays():
     #today = datetime.now().strftime('%Y-%m-%d')
@@ -161,59 +181,4 @@ def webs(chat_id, message):
         'reply_markup': json.dumps(reply_markup)
     }
     requests.post(surl, data=data)
-
-def insd(chat_id, message):
-    try:
-        if message == "/insdown":
-            send_message(chat_id, "语法错误，请使用/insdown url下载图片")
-            return
-        url = message[9:]
-        index = url.find('/?')
-        if index != -1:
-            url = url[:index]
-
-        SHORTCODE = url.split('/')[-1]
-        # 使用Instaloader下载给定的URL的图片
-        L = instaloader.Instaloader()
-        post = Post.from_shortcode(L.context, SHORTCODE)
-        # 下载根据url截短出的shortcode的图片
-        L.download_post(post, target='insdown')
-        # 打开文件夹
-        dir_path = 'insdown/'
-
-        # 获取子目录下所有jpg文件的文件路径
-        jpg_files = glob.glob(os.path.join(dir_path, '*.jpg'))
-        send_message(chat_id, "正在发送图片……(*^▽^*)")
-        # 打开所有jpg文件
-        for file_path in jpg_files:
-            with open(file_path, 'rb') as f:
-                # 发送图片
-                data = {
-                    'chat_id': chat_id
-                }
-                files = {
-                    'photo': f
-                }
-
-                requests.post(purl, data=data, files=files)
-        # 获取子目录下所有mp4文件的文件路径
-        mp4_files = glob.glob(os.path.join(dir_path, '*.mp4'))
-        send_message(chat_id, "正在发送视频……(*^▽^*)")
-        # 打开所有mp4文件
-        for file_path in mp4_files:
-            with open(file_path, 'rb') as f:
-                # 发送视频
-                data = {
-                    'chat_id': chat_id
-                }
-                files = {
-                    'video': f
-                }
-                requests.post(vurl, data=data, files=files)
-        # 删除文件夹
-        shutil.rmtree(dir_path)
-    except Exception as e:
-        send_message(chat_id, "" + str(e) + "好像出错了……(╥╯^╰╥)")
-
-
 
