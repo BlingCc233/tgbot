@@ -45,5 +45,5 @@ _tgbot的动漫形象尚未建立_
 - [ ] GPT
 
 ## 涩图
-- 使用`/setu ?`自定义涩图类型，for instance:`/setu ?r18=1`
+- 使用`/setu `自定义涩图类型，for instance:`/setu tag=萝莉|少女&tag=白丝|黑丝&num=3`
 - <a href="https://api.lolicon.app/#/">参考涩图API调用方法</a>
