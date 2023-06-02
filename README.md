@@ -18,7 +18,7 @@ _tgbot的动漫形象尚未建立_
 </div>
 
 ## 启动
-- 使用时仅需添加`TELEGRAM_API_TOKEN`中的机器人token，以及`/mihoyo.py`中的抓包信息(请自行参考注释)
+- 使用时仅需修改`Config.py`中的机器人token`TELEGRAM_API_TOKEN`，以及`/mihoyo.py`中的抓包信息(请自行参考注释)
 - 不需要的功能请直接用`'''`多行注释掉
 - 需要的功能请自行参照源码补充
 ## 功能
