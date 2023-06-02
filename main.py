@@ -32,11 +32,12 @@ def get_updates(offset=None):
                 # 如果是消息更新
                 if "message" in update:
                     message = update["message"]
-                    # 处理消息
-                    api.cmds(message["text"], message["chat"]["id"], update)
+                    chat_type = message["chat"]["type"]
+                    api.cmds(message["text"], message["chat"]["id"], message["message_id"], update)
+
                 # 如果是回调查询更新
                 elif "callback_query" in update:
-
+                    # if update["callback_query"]["message"]["chat"]["id"] > 0:
                     # 处理回调查询
                     api.button_callback(update, None)
 
