@@ -43,9 +43,7 @@ def get_updates(offset=None):
                 # 如果是消息更新
                 if "message" in update:
                     message = update["message"]
-                    if message["chat"]["type"] == "group":
-                        offset = update["update_id"] + 1
-                        get_updates(offset)
+
                     # 处理消息
                     api.cmds(message["text"], message["chat"]["id"], update)
                 # 如果是回调查询更新
@@ -58,6 +56,8 @@ def get_updates(offset=None):
                 offset = update["update_id"] + 1
     except (requests.exceptions.RequestException, ValueError, KeyError) as e:
         print(f'Error occurred while fetching updates: {str(e)}')
+        offset = update["update_id"] + 1
+        get_updates(offset)
     time.sleep(1)
     # 继续获取更新
     get_updates(offset)

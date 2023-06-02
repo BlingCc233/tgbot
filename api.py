@@ -163,55 +163,57 @@ def webs(chat_id, message):
     requests.post(surl, data=data)
 
 def insd(chat_id, message):
-    if message == "/insdown":
-        send_message(chat_id, "语法错误，请使用/insdown url下载图片")
-        return
-    url = message[9:]
-    index = url.find('/?')
-    if index != -1:
-        url = url[:index]
+    try:
+        if message == "/insdown":
+            send_message(chat_id, "语法错误，请使用/insdown url下载图片")
+            return
+        url = message[9:]
+        index = url.find('/?')
+        if index != -1:
+            url = url[:index]
 
-    SHORTCODE = url.split('/')[-1]
-    # 使用Instaloader下载给定的URL的图片
-    L = instaloader.Instaloader()
-    post = Post.from_shortcode(L.context, SHORTCODE)
-    # 下载根据url截短出的shortcode的图片
-    L.download_post(post, target='insdown')
-    #打开文件夹
-    dir_path = 'insdown/'
+        SHORTCODE = url.split('/')[-1]
+        # 使用Instaloader下载给定的URL的图片
+        L = instaloader.Instaloader()
+        post = Post.from_shortcode(L.context, SHORTCODE)
+        # 下载根据url截短出的shortcode的图片
+        L.download_post(post, target='insdown')
+        # 打开文件夹
+        dir_path = 'insdown/'
 
-    # 获取子目录下所有jpg文件的文件路径
-    jpg_files = glob.glob(os.path.join(dir_path, '*.jpg'))
-    send_message(chat_id, "正在发送图片……(*^▽^*)")
-    # 打开所有jpg文件
-    for file_path in jpg_files:
-        with open(file_path, 'rb') as f:
-            # 发送图片
-            data = {
-                'chat_id': chat_id
-            }
-            files = {
-                'photo': f
-            }
+        # 获取子目录下所有jpg文件的文件路径
+        jpg_files = glob.glob(os.path.join(dir_path, '*.jpg'))
+        send_message(chat_id, "正在发送图片……(*^▽^*)")
+        # 打开所有jpg文件
+        for file_path in jpg_files:
+            with open(file_path, 'rb') as f:
+                # 发送图片
+                data = {
+                    'chat_id': chat_id
+                }
+                files = {
+                    'photo': f
+                }
 
-            requests.post(purl, data=data, files=files)
-            pass
-    # 获取子目录下所有mp4文件的文件路径
-    mp4_files = glob.glob(os.path.join(dir_path, '*.mp4'))
-    send_message(chat_id, "正在发送视频……(*^▽^*)")
-    # 打开所有mp4文件
-    for file_path in mp4_files:
-        with open(file_path, 'rb') as f:
-            # 发送视频
-            data = {
-                'chat_id': chat_id
-            }
-            files = {
-                'video': f
-            }
-            requests.post(vurl, data=data, files=files)
-            pass
-    # 删除文件夹
-    shutil.rmtree(dir_path)
+                requests.post(purl, data=data, files=files)
+        # 获取子目录下所有mp4文件的文件路径
+        mp4_files = glob.glob(os.path.join(dir_path, '*.mp4'))
+        send_message(chat_id, "正在发送视频……(*^▽^*)")
+        # 打开所有mp4文件
+        for file_path in mp4_files:
+            with open(file_path, 'rb') as f:
+                # 发送视频
+                data = {
+                    'chat_id': chat_id
+                }
+                files = {
+                    'video': f
+                }
+                requests.post(vurl, data=data, files=files)
+        # 删除文件夹
+        shutil.rmtree(dir_path)
+    except Exception as e:
+        send_message(chat_id, "" + str(e) + "好像出错了……(╥╯^╰╥)")
+
 
 
